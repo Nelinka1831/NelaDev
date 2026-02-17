@@ -1,0 +1,75 @@
+﻿﻿@using web.Models
+@model Numbers
+
+@{
+    ViewData["Title"] = "NelaDev";
+}
+
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8 text-center">
+			<h1 class="display-4 mb-4">Analýza čísel</h1>
+
+			<form asp-action="Index" method="post">
+				<div class="form-group mb-3 text-start">
+					<label asp-for="InputValues" class="form-label">Zadejte 3 až 20 čísel oddělených čárkou nebo mezerou:</label>
+					<input asp-for="InputValues" class="form-control" placeholder="Např. 1 2 3 4 nebo 1,2,3,4" />
+					<span asp-validation-for="InputValues" class="text-danger"></span>
+				</div>
+
+				<button type="submit" class="btn btn-primary">Analyzovat</button>
+			</form>
+
+			@if (Model?.Values != null && Model.Values.Length > 0)
+			{
+				<div class="row mt-5">
+					<div class="col-md-6 mb-4">
+						<div class="card mb-4">
+							<div class="card-body">
+								<h4 class="card-title">Všechna čísla</h4>
+								<p class="card-text">@string.Join(", ", Model.Values)</p>
+							</div>
+						</div>
+
+						<div class="card mb-4">
+							<div class="card-body">
+								<h4 class="card-title">Unikátní hodnoty</h4>
+								<p class="card-text">@string.Join(", ", Model.UniqueValues!)</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-4">
+						<div class="card">
+							<div class="card-body">
+								<h4>Opakující se hodnoty</h4>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Hodnota</th>
+											<th>Počet výskytů</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var item in Model.RepeatedValues!)
+										{
+											<tr>
+												<td>@item.Key</td>
+												<td>@item.Value</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
