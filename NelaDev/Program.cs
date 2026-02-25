@@ -4,14 +4,14 @@ int[] numbers = { 5, 3, 8, 5, 2, 3, 9, 1, 4, 8, 8, 6, 2, 7, 5, 3, 10, 9, 1, 5 };
 // Seznam unikátních hodnot z původního seznamu
 var uniqueValues = numbers.Distinct();
 
-// Opakující se hodnoty v seznamu
-var repeatedValues = numbers.GroupBy(x => x).Where(x => x.Count() > 1);
-
 // Výpis unikátních hodnot
 Console.WriteLine($"Seznam unikátních hodnot: [ {String.Join(", ", uniqueValues)} ]\n");
 
+// Opakující se hodnoty v seznamu
+var repeatedValues = numbers.GroupBy(x => x).Where(x => x.Count() > 1);
+
 // Výpis hodnot, které se opakují a kolikrát
-foreach (var r in repeatedValues)
+ foreach (var r in repeatedValues)
 {
     Console.WriteLine($"Hodnota {r.Key} se v původním seznamu opakuje {r.Count()}x.");
 }
